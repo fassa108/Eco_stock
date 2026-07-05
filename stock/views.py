@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework  import status
 
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 
 from stock.models import Product, Warehouse

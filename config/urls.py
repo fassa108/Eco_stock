@@ -18,13 +18,20 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 from stock.views import ProductModelViewSet, WarehouseModelViewSet
+
 router = routers.SimpleRouter()
 
 router.register('warehouses',WarehouseModelViewSet,basename = 'warehouse')
 router.register('products', ProductModelViewSet, basename = 'product')
 
 urlpatterns = [
+    path('', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
